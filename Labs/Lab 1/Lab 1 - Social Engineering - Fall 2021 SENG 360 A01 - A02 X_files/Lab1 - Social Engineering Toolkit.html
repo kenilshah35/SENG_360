@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script>function lti_launch( vars, target ) {
+						var query = '';
+						var new_tab = false;
+
+						for(var key in vars) {
+							if(query.length == 0) {
+								query += '?' + key + '=' + encodeURIComponent(vars[key]);
+							}
+							else {
+								query += '&' + key + '=' + encodeURIComponent(vars[key]);
+							}
+						}
+
+						var url = '/d2l/customization/pearsonlti/163342/Launch' + query;(target == '_blank') ? window.open( url, '_blank' ) : location.replace( url );}</script><script src="Lab1%20-%20Social%20Engineering%20Toolkit_data/MathML.js"></script><script>document.addEventListener('DOMContentLoaded', function() { D2LMathML.DesktopInit('https://s.brightspace.com/lib/mathjax/2.7.4/MathJax.js?config=MML_HTMLorMML','https://s.brightspace.com/lib/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML%2cSafe','120',true); });</script><script>window.addEventListener('message', function(event) { 
+					if( !event.data ) {
+						return;
+					}
+
+					var params;
+					try {
+						params = JSON.parse( event.data );
+					}
+					catch {
+						return;
+					}
+					if( !params.subject || params.subject !== 'lti.frameResize' ) {
+						return;
+					}
+
+					const MAX_FRAME_HEIGHT = 10000
+					if( !params.height || params.height < 1 || params.height > MAX_FRAME_HEIGHT ) {
+						console.warn( 'Invalid height value received, aborting' );
+						return;
+					}
+					var el = document.getElementsByTagName( 'iframe' );
+					for ( var i=0; i < el.length; i++ ) {
+						if( el[i].contentWindow === event.source ) {
+							el[i].style.height = params.height + 'px';
+							el[i].style.width = '100%';
+							console.info( 'Setting iFrame height to ' + params.height );
+							console.info( 'Setting iFrame width to 100%' );
+						}
+					}
+				});</script></head>
+<body style="font-family: verdana, sans-serif; font-size: 12px; overflow-y: hidden;">
+<h1>Objective</h1>
+<p>The objective of this lab is to provide you with an appreciation for 
+the kinds of tools available to attackers to launch social engineering 
+attacks. The same tools are also used by security engineers to launch 
+educational campaigns.</p>
+<p></p>
+<h1>Important Notices</h1>
+<p>You are not allowed to use the knowledge and tools in this lab for 
+any other purpose or in any other way without express prior permission.</p>
+<p>Please take good notes during the lab about what you did and what you observed. This will help you write your lab report.</p>
+<p>Please note that the lab has several questions (marked with Q1,Q2, 
+...) and also asks you to take screen shots (marked with S1, S2,...)</p>
+<p></p>
+<h1>Preparation</h1>
+<h4>Start up the SEED<span style="color: #000000;"> VM. </span></h4>
+<p><span style="color: #d40067;"><span style="color: #000000;">We will 
+use the Social Engineering Toolkit (SET) for this lab. Since you don't 
+have root access to the machines in the lab, we are using a Virtual 
+Machine (VM) where you have root permissions to install things. We are 
+using the SEED VM for this course, which is Ubuntu Linux. SET is not yet
+ installed on that image, so you need to install it. If you are unable 
+to do this lab in person at the University (and you have permission to 
+do it at home) you can install SET inside a VM (as we do here) or you 
+can install it on your host machine. We recommend the first, as it is 
+easy to remove.</span></span></p>
+<p><span style="color: #d40067;"><span style="color: #000000;">The SEED VM can be started with VirtualBox</span></span></p>
+<p><span style="color: #d40067;">(Enter details on how to do so, here).</span></p>
+<p>The password for user SEED is "dees"</p>
+<p>Open a terminal and clone the SET repo</p>
+<blockquote>
+<p><br><code><strong>git clone <a href="https://github.com/trustedsec/social-engineer-toolkit/">https://github.com/trustedsec/social-engineer-toolkit/</a> setoolkit</strong>/</code><br><br></p>
+</blockquote>
+<p></p>
+<p><strong>Note</strong> :- For students who will be attending lab they 
+need to run below command first to configure git to use proxy otherwise 
+"git clone" command will fail.</p>
+<blockquote>
+<p>git config --global http.proxy <a href="http://192.168.1.1:3128/">http://192.168.1.1:3128</a></p>
+</blockquote>
+<p></p>
+<h4>Build SET</h4>
+<blockquote>
+<h4><br><br><code><strong>cd setoolkit/</strong></code><strong><br><br><code>sudo pip3 install -r requirements.txt</code></strong><code><strong><br></strong><strong></strong></code></h4>
+<p><code><strong>sudo python3 setup.py</strong></code></p>
+</blockquote>
+<p><strong></strong></p>
+<h1><strong>Create&nbsp;Phishing Site</strong></h1>
+<h4>Start SET<strong></strong></h4>
+<blockquote>
+<p><strong><code>sudo ./setoolkit</code><br></strong></p>
+</blockquote>
+<p>Read the terms of service - in particular the red part.</p>
+<p></p>
+<ul>
+<li>Select "Social Engineering Attacks" (1)<br><br><img src="Lab1%20-%20Social%20Engineering%20Toolkit_data/PastedImage_2osgq4z67ei9wljxre76ut31vxoa0fh2001692529.png" data-d2l-editor-default-img-style="true" style="max-width: 100%;" width="394" height="200"><br><br><br></li>
+<li>Select "Website Attack Vector" (2)<br><br><img src="Lab1%20-%20Social%20Engineering%20Toolkit_data/PastedImage_fwrjnsaf26dz2dghg1ipqcyhwf7vepry001692529.png" data-d2l-editor-default-img-style="true" style="max-width: 100%;" width="325" height="200"><br><br><br></li>
+<li>Select "Credential Harvester Attack Method" (3)<br><br><img src="Lab1%20-%20Social%20Engineering%20Toolkit_data/PastedImage_1hga5jhpavm1i3xl5k18p2uq2p3l6pqs001692529.png" data-d2l-editor-default-img-style="true" style="max-width: 100%;" width="389" height="150"><br><br></li>
+<li>Select "Site Cloner" (2)<br><br><img src="Lab1%20-%20Social%20Engineering%20Toolkit_data/PastedImage_0msme8o31wea2d7h5z25yhzenvltlkag001692529.png" data-d2l-editor-default-img-style="true" style="max-width: 100%;" width="178" height="70"><br><br></li>
+<li>Press return when asked about the "IP address for the POST back in Harbester"<br><br>Note:
+ a real attacker could configure another machine as the IP address to 
+receive any credentials harvested in the attack. However, we will just 
+use localhost.<br><br></li>
+<li>Enter the url to clone:&nbsp;<br><br>Here you can enter any URL to 
+clone as a "fake" web site. For the purpose of this lab exercise, just 
+enter "https://www.facebook.com"<br><br></li>
+<li>The fake web site "harvester" should now be started. The attacker 
+would now craft a phishing email to lure victims to navigate to the fake
+ web site. We will do this later. For now, let's start a Web browser and
+ navigate to the local host IP address:<br><br>Start firefox and enter the previously displayed IP address (or simply "localhost") in the address bar.<br><br></li>
+<li>Observe that the Web site&nbsp;<em>looks like</em> Facebook</li>
+<li>Now enter your login credentials (if you are a Facebook user, don't use your real credentials here. Just make something up.)</li>
+<li>Observe what happens in the browser after you tried to log in</li>
+<li>Observe that the "harvester" has received data (in the terminal window) <span style="color: #cd2026;">(Take screen shot S1)</span></li>
+<li>Hit "control-c" in the terminal window to generate a report. (Write down or remember the path to the report.)</li>
+<li>Exit SET by entering "99" three times</li>
+<li>Now look at the generated report<br><br>
+<blockquote><code>sudo more '/root/.set/reports/2021-......xml'</code></blockquote>
+</li>
+<li><span style="color: #cd2026;">(Take screen shot S2 of the start of that file)</span></li>
+<li>Try to find the login information you entered.&nbsp;</li>
+</ul>
+<h1>Create a (textual) phishing email</h1>
+<p>So far, we have created a phishing (fake) web site. But we have not 
+yet created an email to lure victims to our fake site. We will use the 
+SET to do so now.</p>
+<p>In order to send fake emails, we can send out our own SMTP server. 
+The software package "Postfix" is such a server for Ubuntu. Install it:</p>
+<blockquote>
+<p><span style="font-family: monospace;"><span style="background-color: #b4d7ff;">sudo apt update</span></span></p>
+<p><code>sudo apt install postfix</code></p>
+</blockquote>
+<p>Use the default settings "Internet Site" during installation. You can use "VM" as the name (or any other name).</p>
+<ul>
+<li>Start up SET again<br><br>sudo ./setoolkit<br><br></li>
+<li>Select "Social Engineering Attacks" (1)</li>
+<li>Select "Mass Mailer Attack" (5)</li>
+<li>Select "E-Mail Attack Single Email Address" &nbsp;(Note: attackers 
+would normally choose the other option to spam large numbers of 
+harvested email addresses.)</li>
+<li>Enter YOUR email address. (You will be the target victim here. <strong>USE your Uvic email address</strong>)</li>
+<li>Select "Use your own server or open relay" (2)</li>
+<li>Enter an email address for the sender (can be made up like for example: "lewandowsky@bayern.de")</li>
+<li>Enter a name for the sender (made up like "Robert Lewansowsky")</li>
+<li>Enter return twice for the "open relay" questions</li>
+<li><span style="color: #cd2026;">(Question Q1: What is an open SMTP 
+relay? Why is it problematic? do some research later for your report and
+ answer this question)</span></li>
+<li>Enter <code>localhost</code> for the SMTP email server address (this will use the postfix SMTP server you just installed)</li>
+<li>Use the default port (25)</li>
+<li>Choose whether or not to make this a high priority email</li>
+<li>Choose not to attach a file (for now)</li>
+<li>Choose not to attach an inline file (for now)</li>
+<li>Choose plain message format (for now)</li>
+<li>Enter some message subject and contents (and then end with entering "END"<br><br></li>
+<li>Your email should be sent to your victim (yourself)</li>
+</ul>
+<h1>Create a (convincing) phishing email</h1>
+<p>Now that you have learned the basics of setting up a phishing attack,
+ let's create a convincing phishing email. This will need HTML content 
+and some psychological elements. Try to get the victim to log in to 
+Facebook. Remember, your goal is to get your victim to click on a link 
+that looks like Facebook but brings them to your fake web site 
+(localhost in this case). You can use any HTML editor, including this 
+one&nbsp;<a href="https://html-online.com/editor/">https://html-online.com/editor/</a></p>
+<p>Once you have the HTML for this email developed, you can send it as 
+above to YOURSELF ONLY. Then start the harvester and see if the attack 
+works.&nbsp;</p>
+<p><span style="color: #cd2026;">(Take screen shot S3 of your phishing email)</span></p>
+<p></p>
+<p></p>
+<p><strong></strong></p>
+</body></html>
